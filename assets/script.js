@@ -1,149 +1,152 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-// Importing Variables from DOM
-let startQuizEl = $('#start-quiz')
-let questionZoneEL = $('#question-zone')
-let endScreenEL = $('#end-screen')
-let timerEl = $('current-time')
-let startButtonEl = $('start-btn')
-let answersCorrect = 0
+    // Importing Variables from DOM
+    let startQuizEl = $('#start-quiz')
+    let questionZoneEL = $('#question-zone')
+    let endScreenEL = $('#end-screen')
+    let timerEl = document.querySelector('.current-time')
+    
+    // Declaring variables
+    let timerId;
+    let questionIndex = 0;
+    let timeRemaining = 60;
+    let answersCorrect = 0
 
-// Declaring variables
-let questionIndex = 0;
-let timeRemaining = 60;
-let timerId;
+    // Questions and answers
+    let questions = [
+        {
+            title: "what is 1 + 1",
+            choices: [1, 2, 3, 4],
+            answer: 2,
+        },
+        {
+            title: "what is 2 + 2",
+            choices: [4, 5, 6, 7],
+            answer: 4,
+        },
+        {
+            title: "what is 1 + 1",
+            choices: [1, 2, 3, 4],
+            answer: 2,
+        },
+        {
+            title: "what is 1 + 1",
+            choices: [1, 2, 3, 4],
+            answer: 2,
+        },
+        {
+            title: "what is 1 + 1",
+            choices: [1, 2, 3, 4],
+            answer: 2,
+        }
+    ];
 
+    // Hiding questions and end-screen
+    questionZoneEL.hide()
+    endScreenEL.hide()
 
-let questions = [
-    {
-        title: "what is 1 + 1",
-        choices: [1, 2, 3, 4],
-        answer: 2,
-    },
-    {
-        title: "what is 1 + 1",
-        choices: [1, 2, 3, 4],
-        answer: 2,
-    },
-    {
-        title: "what is 1 + 1",
-        choices: [1, 2, 3, 4],
-        answer: 2,
-    },
-    {
-        title: "what is 1 + 1",
-        choices: [1, 2, 3, 4],
-        answer: 2,
-    },
-    {
-        title: "what is 1 + 1",
-        choices: [1, 2, 3, 4],
-        answer: 2,
-    }
-];
+    // When start button is pressed, hides first screen and shows 
+    function startQuiz() {
+        startQuizEl.hide();
+        questionZoneEL.show();
 
-questionZoneEL.hide()
-endScreenEL.hide()
+        timerId = setInterval(clockTick, 1000);
 
-function startQuiz() {
-    startQuizEl.hide();
-    questionZoneEL.show();
-    console.log("clicked");
-
-    timerId = setInterval(clockTick, 1000);
-
-    generateQuestion();
-}
-
-function clockTick() {
-
-    // Perfrom action every second
-    // Decrement time
-    timeRemaining--;
-    // Update DOM
-    timerEl.textContent = `Time: ${timeRemaining}`
-
-    if (timeRemaining <= 0) {
-        endQuiz();
-    }
-}
-
-function generateQuestion() {
-
-    // If we run out of questions, end the game
-    if (questionIndex === questions.length) {
-        endQuiz();
+        generateQuestion();
     }
 
-    let currentQuestion = questions[questionIndex];
+    function clockTick() {
 
-    // With current question, text to title
-  
-    currentQuestion.choices.forEach(function (value) {
-        console.log(`This is value: ${value}`);
-        const answerBtn = $("<button>").text(value);
-        answerBtn.click(function() {
-        console.log($(this).text())
+        // Perfrom action every second
+        // Decrement time
+        timeRemaining--;
+        // Update DOM
+        timerEl.textContent = `Time: ${timeRemaining}`
+
+        if (timeRemaining <= 0) {
+            endQuiz();
+        }
+    }
+
+    function generateQuestion() {
+
+        if (questionIndex === questions.length) {
+            endQuiz();
+        }
+
+        let choicesEl = document.querySelector('#question-choices');
+        choicesEl.innerHTML = '';
+        // current question
+        let currentQuestion = questions[questionIndex];
+        $("#question-title").text(currentQuestion.title);
+        // 
+        currentQuestion.choices.forEach(function (option) {
+
+            let answerBtn = document.createElement('button');
+            answerBtn.setAttribute('class', 'choices');
+            answerBtn.setAttribute('value', option);
+            answerBtn.textContent = option;
+            answerBtn.onclick = validateAnswers;
+
+
+            choicesEl.append(answerBtn)
         });
-        questionZoneEL.append(answerBtn);
-        
+    };
 
 
-    })
+    function validateAnswers() {
 
-    // for (let i = 0; i < 4; ++i) {
-    //     let value = currentQuestion.choices[i];
-    //     console.log(`This is value: ${value}`);
-    //     $("<button>").text(value)
-    // }
-    /* Create a loop to make 4 buttons from choices array
-        Hint (forEach loop)
-
-            --Create element button
-            add attribute class
-            -add attribute value 
-            tempBtn.setAttriute('value', value)
-            --Add some text content
-            -Add onclick function to buttons
-                The function is going to validate answer
-            --Append to question zone
-        
-    */
-}
-
-function validateAnswers() {
-    // Validate if answer is correct
+        // Validate if answer is correct
         // This.value = value
+        const userChoice = this.value;
+        const correctAnswer = questions[questionIndex].answer;
 
-    // Grab user choice
+        if (userChoice === correctAnswer) {
+            answersCorrect++
+        }
+        else {
+            timeRemaining -= 10
+        }
+
+
+        questionIndex++
+        generateQuestion()
+
+
+        // Grab user choice
         // this.value
 
-    // Grab correct answer
+        // Grab correct answer
 
-    // Compare and perform actions
+        // Compare and perform actions
 
-    // increment questionsIndex
-    // generateQuestion();
+        // increment questionsIndex
+        // generateQuestion();
 
-}
+    }
+
+    function endQuiz() {
+        
+        questionZoneEL.hide();
+        endScreenEL.show();
+
+    }
+
+    function endQuiz() {
+
+        // Game over
+
+        clearInterval(timerId)
+
+    }
 
 
 
-function endQuiz() {
-
-// Game over
-
-clearInterval(timerId)
-
-}
 
 
-
-
-
-$("#start-btn").on('click', function () {
-    startQuiz();
-})
+    $("#start-btn").on('click', function () {
+        startQuiz();
+    })
 
 
 });

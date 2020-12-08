@@ -1,0 +1,29 @@
+.current-time {
+    text-align: right;
+    margin-right: 20px;
+}
+
+#start-quiz {
+    text-align: center;
+}
+
+#question-zone {
+    text-align: center;
+}
+
+#start-btn {
+    height: 30px;
+    width: 100px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(105, 12, 12);
+}
+
+#start-btn:hover {
+    background-color: rgb(185, 76, 76);
+}
+
+.choices {
+    height: 50px;
+    width: 50px;
+    background-color: rgb(201, 87, 87);
+}
