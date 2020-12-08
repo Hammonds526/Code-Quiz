@@ -15,29 +15,29 @@ $(document).ready(function () {
     // Questions and answers
     let questions = [
         {
-            title: "what is 1 + 1",
-            choices: [1, 2, 3, 4],
-            answer: 2,
+            title: "Which is not a string method?",
+            choices: [".slice", ".append", ".replace", ".indexOf"],
+            answer: ".replace",
         },
         {
-            title: "what is 2 + 2",
-            choices: [4, 5, 6, 7],
-            answer: 4,
+            title: "Which is not a JavaScript Data type?",
+            choices: ["String", "Number", "Program", "Boolean"],
+            answer: "Program",
         },
         {
-            title: "what is 1 + 1",
-            choices: [1, 2, 3, 4],
-            answer: 2,
+            title: "What is not a type of Pop-up box available in JavaScript?",
+            choices: ["Alert", "Confirm", "Notify", "Prompt"],
+            answer: "Notify",
         },
         {
-            title: "what is 1 + 1",
-            choices: [1, 2, 3, 4],
-            answer: 2,
+            title: "Inside which HTML element do we put the JavaScript?",
+            choices: ["<javascript>", "<js>", "<script>", "<scripting>"],
+            answer: "<script>",
         },
         {
-            title: "what is 1 + 1",
-            choices: [1, 2, 3, 4],
-            answer: 2,
+            title: "How to write an IF statement in JavaScript?",
+            choices: ["if (i==5)", "if i==5 then", "if i=5", "if i=5 then"],
+            answer: "if (i==5)",
         }
     ];
 
@@ -103,6 +103,7 @@ $(document).ready(function () {
 
         if (userChoice === correctAnswer) {
             answersCorrect++
+            timeRemaining + 0
         }
         else {
             timeRemaining -= 10
